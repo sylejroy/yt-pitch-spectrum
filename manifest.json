@@ -1,0 +1,88 @@
+{
+  "manifest_version": 2,
+  "name": "YT Pitch & Spectrum",
+  "version": "1.1.0",
+  "description": "Transpose YouTube audio by semitones without changing speed, remove or isolate vocals, see the notes being played on a live spectrum, and shape the sound with a 10-band EQ, compressor and auto-loudness.",
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "yt-pitch-spectrum@local",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "icons/icon.svg",
+    "default_title": "YT Pitch & Spectrum (Alt+Shift+Y)"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "dsp/pitch-shifter.js",
+        "dsp/vocal.js",
+        "content/audio-engine.js",
+        "content/ui.js",
+        "content/main.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    "dsp/worklet.js",
+    "dsp/pitch-shifter.js",
+    "dsp/vocal.js"
+  ],
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+Y"
+      },
+      "description": "Show / hide the panel"
+    },
+    "pitch-up": {
+      "suggested_key": {
+        "default": "Alt+Shift+Up"
+      },
+      "description": "Pitch up one semitone"
+    },
+    "pitch-down": {
+      "suggested_key": {
+        "default": "Alt+Shift+Down"
+      },
+      "description": "Pitch down one semitone"
+    },
+    "pitch-reset": {
+      "suggested_key": {
+        "default": "Alt+Shift+0"
+      },
+      "description": "Reset pitch"
+    },
+    "vocal-toggle": {
+      "suggested_key": {
+        "default": "Alt+Shift+V"
+      },
+      "description": "Toggle vocal removal"
+    }
+  }
+}
